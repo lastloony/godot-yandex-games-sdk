@@ -14,8 +14,8 @@
 
 Аддон можно установить из assetlib или как сабмодуль если вы используете гит для хранения версий проекта
 
-```
-git add submodule https://github.com/BasilYes/godot-yandex-games-sdk.git addons/godot-yandex-games-sdk
+```bash
+git submodule add https://github.com/BasilYes/godot-yandex-games-sdk.git addons/godot-yandex-games-sdk
 ```
 
 Просто установите плагин и добавьте "yandex" в feature (не знаю как в переводе) к вашему экспорту (см. скрин ниже)
