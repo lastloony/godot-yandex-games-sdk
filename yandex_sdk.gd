@@ -332,6 +332,10 @@ func _leaderboard_player_entry_loaded(args) -> void:
 		for i in range(keys.length):
 			result[keys[i]] = values[i]
 		leaderboard_player_entry_loaded.emit(result)
+	else:
+		# Иначе await leaderboard_player_entry_loaded зависает навсегда при ошибке
+		# (например, у игрока ещё нет записи в лидерборде).
+		leaderboard_player_entry_loaded.emit(null)
 
 
 func _leaderboard_entries_loaded(args) -> void:
@@ -342,8 +346,9 @@ func _leaderboard_entries_loaded(args) -> void:
 		for i in range(keys.length):
 			result[keys[i]] = values[i]
 		leaderboard_entries_loaded.emit(result)
-	elif args[0] == 'error':
-		print("Произошла ошибка при загрузке лидерборда.")
+	else:
+		# Иначе await leaderboard_entries_loaded зависает навсегда при ошибке.
+		leaderboard_entries_loaded.emit(null)
 
 
 func _game_initialized(args) -> void:
