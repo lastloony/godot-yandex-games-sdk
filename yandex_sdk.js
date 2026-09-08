@@ -104,9 +104,17 @@ function SaveLeaderboardScore(leaderboardName, score, extraData) {
 		"with",
 		extraData,
 	);
-	ysdk.leaderboards.setScore(leaderboardName, score, extraData).then(() => {
-		console.log("Leaderboard score saved");
-	});
+	ysdk.leaderboards.setScore(leaderboardName, score, extraData)
+		.then(() => {
+			console.log("Leaderboard score saved");
+		})
+		.catch((err) => {
+			// Раньше ошибка тут проглатывалась молча -- счёт "не сохранялся"
+			// без единого следа в консоли. Частые причины: лидерборд с этим
+			// именем ещё не создан в Yandex Games Console, либо игрок не
+			// авторизован (lite-режим лидерборды на запись не принимают).
+			console.log("Leaderboard score save error", err);
+		});
 }
 
 function LoadLeaderboardPlayerEntry(leaderboardName, callback) {
@@ -201,6 +209,8 @@ function SaveData(data, force) {
 	console.log("Data save ", data);
 	player.setData(data, force).then((result) => {
 		console.log("Data saved ", result, " ", data);
+	}).catch((err) => {
+		console.log("Data save error", err);
 	});
 }
 
@@ -208,6 +218,8 @@ function SaveStats(data) {
 	console.log("Stats save ", data);
 	player.setStats(data).then((result) => {
 		console.log("Stats saved ", result, " ", data);
+	}).catch((err) => {
+		console.log("Stats save error", err);
 	});
 }
 
